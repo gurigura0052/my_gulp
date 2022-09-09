@@ -25,11 +25,6 @@ $ npm install
 $ npx gulp
 ```
 
-## ビルド
-```
-npx gulp build
-```
-
 ---
 
 ### .browserslistrc

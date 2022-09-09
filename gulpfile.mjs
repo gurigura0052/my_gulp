@@ -1,14 +1,20 @@
-const { src, dest, watch, parallel, series } = require("gulp");
-const del = require('del');
-const sass = require("gulp-sass");
-const postcss = require('gulp-postcss');
-const autoprefixer = require("autoprefixer");
-const ejs = require("gulp-ejs");
-const rename = require('gulp-rename')
-const browserSync = require('browser-sync').create();
+import gulp from "gulp";
+const { src, dest, watch, parallel, series } = gulp;
+import {deleteSync} from 'del';
+import dartSass from 'sass';
+import gulpSass from 'gulp-sass';
+const sass = gulpSass(dartSass);
+import postcss from 'gulp-postcss';
+import autoprefixer from "autoprefixer";
+import ejs from "gulp-ejs";
+import rename from 'gulp-rename';
+import browserSync from 'browser-sync';
 
 // 公開用ディレクトリの中身を削除
-const clean = () => del([ 'dist' ]);
+const clean = (done) => {
+  deleteSync([ 'dist' ]);
+  done();
+};
 
 /**
  * browserSync
@@ -46,9 +52,7 @@ const compileSass = () =>
 // ejs
 const compileEjs = () =>
   src(["src/ejs/**/*.ejs", '!' + "src/ejs/**/_*.ejs"])
-    .pipe(ejs({}, {}, { 
-      ext: '.html'
-    }))
+    .pipe(ejs())
     .pipe(rename({ extname: '.html' }))
     .pipe(dest('dist'));
 
@@ -90,7 +94,7 @@ const watchFile = () => {
  * コマンド
  */
 // npx gulp
-exports.default = series(clean, gulpStart, parallel(sync, watchFile))
+export default series(clean, gulpStart, parallel(sync, watchFile))
 
 // npx gulp bulid
-exports.build = series(clean, gulpStart)
+// exports.build = series(clean, gulpStart)

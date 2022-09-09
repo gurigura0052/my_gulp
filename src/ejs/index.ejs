@@ -1,12 +1,14 @@
 <% 
-var title = 'タイトル';
-var description = 'ディスクリプション';
-var path = '.';
-var bodyClass = 'home';
+const meta = {
+  title: 'タイトル',
+  description: 'ディスクリプション',
+  path: '.',
+  bodyClass: 'home',
+}
 %>
-<% include common/_header %>
+<%- include ('common/_header', {meta: meta}) %>
 
 <div class="content">
 </div><!-- /content -->
 
-<% include common/_footer %>
+<%- include ('common/_footer') %>
